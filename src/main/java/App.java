@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,8 +19,10 @@ public class App extends Application {
         Label label = new Label("Hello, JavaFX!");
         label.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
+        TextArea txt_decoded = new TextArea();
+
         Button button = new Button("Clica-me!");
-        button.setOnAction(e -> label.setText("Botão clicado!"));
+        button.setOnAction(e -> txt_decoded.text.setText(Critp.decode(txt_decoded.text.getText())));
 
         // Layout
         VBox root = new VBox(20);
@@ -37,7 +40,8 @@ public class App extends Application {
     /**
      * Ponto de entrada da aplicação.
      *
-     * @param args argumentos da linha de comandos
+     * @param args
+     *            argumentos da linha de comandos
      */
     public static void main(String[] args) {
         launch(args);
