@@ -22,13 +22,13 @@ public class App extends Application {
         TextArea txt_decoded = new TextArea();
 
         Button button = new Button("Clica-me!");
-        button.setOnAction(e -> txt_decoded.text.setText(Critp.decode(txt_decoded.text.getText())));
+        button.setOnAction(e -> txt_decoded.setText(Cript.decode(txt_decoded.getText())));
 
         // Layout
         VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(40));
-        root.getChildren().addAll(label, button);
+        root.getChildren().addAll(label, button, txt_decoded);
 
         // Cena e janela
         Scene scene = new Scene(root, 400, 300);
@@ -45,7 +45,7 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-        //ashdhasdjkashdkjas
+        // ashdhasdjkashdkjas
 
     }
 }
