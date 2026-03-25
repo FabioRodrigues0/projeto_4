@@ -19,16 +19,16 @@ public class App extends Application {
         Label label = new Label("Hello, JavaFX!");
         label.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        TextArea txt_decoded = new TextArea();
+        TextArea txtDecoded = new TextArea();
 
         Button button = new Button("Clica-me!");
-        button.setOnAction(e -> txt_decoded.setText(Cript.decode(txt_decoded.getText())));
+        button.setOnAction(e -> txtDecoded.setText(Cript.decode(txtDecoded.getText())));
 
         // Layout
         VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(40));
-        root.getChildren().addAll(label, button, txt_decoded);
+        root.getChildren().addAll(label, button, txtDecoded);
 
         // Cena e janela
         Scene scene = new Scene(root, 400, 300);
@@ -46,6 +46,5 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
         // ashdhasdjkashdkjas
-
     }
 }

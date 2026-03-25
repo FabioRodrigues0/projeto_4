@@ -1,28 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.lang.String;
-import java.lang.Character;
 
 public class Cript {
 
     static Map<Character, Integer> charToIntMap = new HashMap<>();
-
-    private static List<Integer> passkey() {
-        Map<Character, Integer> passMap = new HashMap<>();
-        passMap.put('k', 11);
-        passMap.put('o', 15);
-        passMap.put('w', 23);
-        passMap.put('n', 14);
-        passMap.put('e', 5);
-        passMap.put('d', 4);
-        passMap.put('g', 7);
-        passMap.put('a', 1);
-        passMap.put('v', 22);
-
-        return new ArrayList<>(passMap.values());
-    }
 
     private static void alphabetKey() {
         charToIntMap.put('A', 1);
@@ -50,6 +34,16 @@ public class Cript {
         charToIntMap.put('W', 23);
         charToIntMap.put('X', 24);
         charToIntMap.put('Y', 25);
+        charToIntMap.put('Z', 26);
+    }
+
+    static {
+        alphabetKey(); // chamado uma única vez quando a classe é carregada
+    }
+
+    private static List<Integer> passKey() {
+        // k=11, n=14, o=15, w=23, l=12, e=5, d=4, g=7, e=5
+        return new ArrayList<>(Arrays.asList(11, 14, 15, 23, 12, 5, 4, 7, 5));
     }
 
     private static char getKeyByValue(int value) {
@@ -63,18 +57,20 @@ public class Cript {
 
     public static String decode(String text) {
         String decoded = "";
-        List<Integer> list_keys = passkey();
-        int key_index = 0;
-        alphabetKey();
+        List<Integer> listKeys = passKey();
+        int keyIndex = 0;
 
-        for (char c : text.toCharArray()) {
-            decoded += getKeyByValue(
-                charToIntMap.get(c).intValue() - list_keys.get(key_index) - 9
-            );
+        for (char c : text.toUpperCase().toCharArray()) {
+            if (!charToIntMap.containsKey(c))
+                continue;
 
-            key_index++;
-            if (key_index == list_keys.size()) {
-                key_index = 0;
+            int result = charToIntMap.get(c) - listKeys.get(keyIndex) - listKeys.size();
+            result = ((result - 1) % 26 + 26) % 26 + 1;
+            decoded += getKeyByValue(result);
+
+            keyIndex++;
+            if (keyIndex == listKeys.size()) {
+                keyIndex = 0;
             }
         }
         return decoded;
@@ -82,15 +78,20 @@ public class Cript {
 
     public static String encode(String text) {
         String encoded = "";
-        List<Integer> list_keys = passkey();
-        int key_index = 0;
+        List<Integer> listKeys = passKey();
+        int keyIndex = 0;
 
-        for (char c : text.toCharArray()) {
-            encoded += (char) ((int) c + list_keys.get(key_index));
+        for (char c : text.toUpperCase().toCharArray()) {
+            if (!charToIntMap.containsKey(c))
+                continue;
 
-            key_index++;
-            if (key_index == list_keys.size()) {
-                key_index = 0;
+            int result = charToIntMap.get(c) + listKeys.get(keyIndex) + listKeys.size();
+            result = ((result - 1) % 26) + 1;
+            encoded += getKeyByValue(result);
+
+            keyIndex++;
+            if (keyIndex == listKeys.size()) {
+                keyIndex = 0;
             }
         }
         return encoded;
