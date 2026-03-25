@@ -46,6 +46,11 @@ public class Cript {
         return new ArrayList<>(Arrays.asList(11, 14, 15, 23, 12, 5, 4, 7, 5));
     }
 
+    private static List<Integer> lockKey() {
+        // f=6, u=21, t=20, u=21, r=18, e=5
+        return new ArrayList<>(Arrays.asList(6, 21, 20, 21, 18, 5));
+    }
+
     private static char getKeyByValue(int value) {
         for (Map.Entry<Character, Integer> entry : charToIntMap.entrySet()) {
             if (entry.getValue() == value) {
@@ -61,11 +66,12 @@ public class Cript {
         int keyIndex = 0;
 
         for (char c : text.toUpperCase().toCharArray()) {
-            if (!charToIntMap.containsKey(c))
+            if (!charToIntMap.containsKey(c)) {
                 continue;
+            }
 
             int result = charToIntMap.get(c) - listKeys.get(keyIndex) - listKeys.size();
-            result = ((result - 1) % 26 + 26) % 26 + 1;
+            result = ((((result - 1) % 26) + 26) % 26) + 1;
             decoded += getKeyByValue(result);
 
             keyIndex++;
@@ -76,14 +82,41 @@ public class Cript {
         return decoded;
     }
 
+    public static String getLockKey(String name) {
+        String encrypted = "";
+        List<Integer> listKeys = lockKey();
+        int keyIndex = 0;
+
+        for (char c : name.toUpperCase().toCharArray()) {
+            if (!charToIntMap.containsKey(c)) {
+                continue;
+            }
+
+            int result = charToIntMap.get(c) + listKeys.get(keyIndex) + listKeys.size();
+            result = ((result - 1) % 26) + 1;
+            encrypted += getKeyByValue(result);
+
+            keyIndex++;
+            if (keyIndex == listKeys.size()) {
+                keyIndex = 0;
+            }
+        }
+        // ASCII dos dois últimos caracteres encriptados = PIN de 4 dígitos
+        int len = encrypted.length();
+        char last1 = encrypted.charAt(len - 2);
+        char last2 = encrypted.charAt(len - 1);
+        return "" + (int) last1 + (int) last2;
+    }
+
     public static String encode(String text) {
         String encoded = "";
         List<Integer> listKeys = passKey();
         int keyIndex = 0;
 
         for (char c : text.toUpperCase().toCharArray()) {
-            if (!charToIntMap.containsKey(c))
+            if (!charToIntMap.containsKey(c)) {
                 continue;
+            }
 
             int result = charToIntMap.get(c) + listKeys.get(keyIndex) + listKeys.size();
             result = ((result - 1) % 26) + 1;
