@@ -6,12 +6,17 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 javafx {
     version = '25.0.2'
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.graphics', 'javafx.base']
+}
+
+dependencies {
+    implementation 'fabiorodrigues.bricks:bricks:0.2.0'
 }
 
 application {
@@ -36,14 +41,14 @@ checkstyle {
 spotless {
     java {
         target 'src/**/*.java'
-        
+
         // Ordenar e limpar imports
         importOrder()
         removeUnusedImports()
-        
+
         // Formatter Eclipse com Sun/Oracle style
         eclipse().configFile('config/formatter/eclipse-formatter.xml')
-        
+
         // Limpeza
         trimTrailingWhitespace()
         endWithNewline()
