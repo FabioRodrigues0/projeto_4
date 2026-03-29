@@ -32,7 +32,9 @@ public class Cript {
         StringBuilder sb = new StringBuilder();
         int keyIndex = 0;
         for (char c : text.toUpperCase().toCharArray()) {
-            if (!charToIntMap.containsKey(c)) continue;
+            if (!charToIntMap.containsKey(c)){
+                continue;
+            }
             int result = charToIntMap.get(c) + direction * (keys.get(keyIndex) + keys.size());
             result = ((((result - 1) % 26) + 26) % 26) + 1;
             sb.append((char) ('A' + result - 1));
