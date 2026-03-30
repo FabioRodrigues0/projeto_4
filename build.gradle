@@ -6,8 +6,8 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 javafx {
@@ -16,7 +16,7 @@ javafx {
 }
 
 dependencies {
-    implementation 'fabiorodrigues.bricks:bricks:0.3.0'
+    implementation 'com.github.fabiorodrigues0:bricks:v0.3.0'
 }
 
 application {

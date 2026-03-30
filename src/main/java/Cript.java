@@ -32,7 +32,7 @@ public class Cript {
         StringBuilder sb = new StringBuilder();
         int keyIndex = 0;
         for (char c : text.toUpperCase().toCharArray()) {
-            if (!charToIntMap.containsKey(c)){
+            if (!charToIntMap.containsKey(c)) {
                 continue;
             }
             int result = charToIntMap.get(c) + direction * (keys.get(keyIndex) + keys.size());
